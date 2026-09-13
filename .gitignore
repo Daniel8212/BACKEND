@@ -1,0 +1,29 @@
+# Dependencias
+node_modules/
+
+# Entornos y secretos
+.env
+.env.*
+!.env.example
+
+# Documentación interna / informes de avance
+docs/
+*.docx
+*.pdf
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor
+.vscode/
+.idea/
+
+# Docker
+*.pid
