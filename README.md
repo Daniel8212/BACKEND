@@ -22,7 +22,7 @@ ecológicos, Caso 6).
   contratos `IRepositorio*`; validadores de las 6 reglas de negocio con el patrón
   `EstadoResultado`) y capa de **infraestructura** (modelos Mongoose, configuración de
   entorno, repositorios concretos y seed del catálogo).
-- **Sprint 4 — Pendiente:** capa de aplicación (servicios) y API funcional (E1–E3).
+- **Sprint 4 — Completado:** capa de aplicación (servicios) y API funcional (E1–E3).
 - **Sprint 5 — Pendiente:** administración (E4–E6) y contenerización Docker.
 - **Sprint 6 — Pendiente:** despliegue en PaaS, colección Postman y cierre.
 
@@ -36,6 +36,29 @@ ecológicos, Caso 6).
 | R4 | No se elimina un cliente con pedidos registrados | `ClienteValidator` |
 | R5 | El precio no puede modificarse a cero o negativo | `ProductoValidator` |
 | R6 | No hay dos pedidos Pendientes idénticos en menos de 5 minutos | `PedidoValidator` |
+
+## API funcional (Sprint 4)
+
+| Epic | Método | Ruta | Descripción | Respuestas |
+|---|---|---|---|---|
+| E1 | GET | `/api/catalogo?linea=Frutas` | Catálogo con filtro opcional por línea | 200 |
+| E1 | GET | `/api/catalogo` | Catálogo completo | 200 |
+| E2 | POST | `/api/pedidos` | Crear pedido (aplica R2 y R6) | 201, 400, 404, 409 |
+| E3 | GET | `/api/pedidos?clienteId=<id>` | Pedidos de un cliente | 200, 400, 404 |
+| E3 | GET | `/api/clientes/:id` | Consultar un cliente por id | 200, 404 |
+
+### Ejemplo: crear pedido (E2)
+
+```bash
+curl -X POST http://localhost:3000/api/pedidos \
+  -H "Content-Type: application/json" \
+  -d '{"clienteId":"<clienteId>","items":[{"productoId":"<productoId>","cantidad":2}]}'
+```
+
+- **201**: pedido creado.
+- **400**: falta `clienteId` o `items` vacío.
+- **404**: cliente inexistente.
+- **409**: producto agotado/inexistente (R2) o doble pedido Pendiente idéntico en < 5 min (R6).
 
 ## Levantar el entorno (Docker)
 
