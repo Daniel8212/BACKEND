@@ -1,0 +1,58 @@
+{
+  "metodo": "GET",
+  "ruta": "/api/catalogo",
+  "descripcion": "Lista el catálogo de productos ecológicos. El parámetro opcional 'linea' filtra por línea/categoría (E1).",
+  "nota": "Reemplazar <ObjectIdProducto> por ids reales de MongoDB luego de ejecutar 'npm run seed'.",
+  "casos": [
+    {
+      "nombre": "Listado completo",
+      "peticion": "GET /api/catalogo",
+      "respuesta": {
+        "codigo": 200,
+        "cuerpo": [
+          {
+            "id": "<ObjectIdProducto>",
+            "nombre": "Manzana ecológica",
+            "descripcion": "Cosecha local certificada orgánica",
+            "precio": 2.5,
+            "linea": "Frutas",
+            "stock": "disponible"
+          },
+          {
+            "id": "<ObjectIdProducto>",
+            "nombre": "Café de origen",
+            "descripcion": "Café gourmet molido de origen único",
+            "precio": 8.5,
+            "linea": "Cesta",
+            "stock": "agotado"
+          }
+        ]
+      }
+    },
+    {
+      "nombre": "Filtrado por línea",
+      "peticion": "GET /api/catalogo?linea=Frutas",
+      "respuesta": {
+        "codigo": 200,
+        "cuerpo": [
+          {
+            "id": "<ObjectIdProducto>",
+            "nombre": "Manzana ecológica",
+            "descripcion": "Cosecha local certificada orgánica",
+            "precio": 2.5,
+            "linea": "Frutas",
+            "stock": "disponible"
+          },
+          {
+            "id": "<ObjectIdProducto>",
+            "nombre": "Aguacate Hass",
+            "descripcion": "Aguacate ecológico de temporada",
+            "precio": 1.8,
+            "linea": "Frutas",
+            "stock": "disponible"
+          }
+        ]
+      }
+    }
+  ]
+}

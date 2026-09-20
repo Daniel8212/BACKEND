@@ -1,0 +1,46 @@
+{
+  "metodo": "GET",
+  "ruta": "/api/pedidos?clienteId={id}",
+  "descripcion": "Consulta los pedidos de un cliente (E3).",
+  "nota": "Reemplazar <ObjectIdCliente> por un id real de MongoDB.",
+  "casos": [
+    {
+      "nombre": "Pedidos del cliente",
+      "peticion": "GET /api/pedidos?clienteId=<ObjectIdCliente>",
+      "respuesta": {
+        "codigo": 200,
+        "cuerpo": [
+          {
+            "id": "<ObjectIdPedido>",
+            "clienteId": "<ObjectIdCliente>",
+            "items": [{ "productoId": "<ObjectIdProducto>", "cantidad": 2 }],
+            "estado": "Pendiente",
+            "fechaCreacion": "2026-09-20T15:30:00.000Z"
+          }
+        ]
+      }
+    },
+    {
+      "nombre": "No se indicó clienteId",
+      "peticion": "GET /api/pedidos",
+      "respuesta": {
+        "codigo": 400,
+        "cuerpo": {
+          "error": "Debe indicar el clienteId.",
+          "errores": ["Debe indicar el clienteId."]
+        }
+      }
+    },
+    {
+      "nombre": "Cliente no existe",
+      "peticion": "GET /api/pedidos?clienteId=<ObjectIdInexistente>",
+      "respuesta": {
+        "codigo": 404,
+        "cuerpo": {
+          "error": "El cliente \"<ObjectIdInexistente>\" no existe.",
+          "errores": ["El cliente \"<ObjectIdInexistente>\" no existe."]
+        }
+      }
+    }
+  ]
+}

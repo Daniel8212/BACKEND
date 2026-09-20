@@ -1,9 +1,11 @@
 'use strict';
 
 const express = require('express');
+const swaggerUi = require('swagger-ui-express');
 const catalogoRoutes = require('./routes/catalogo.routes');
 const pedidosRoutes = require('./routes/pedidos.routes');
 const clientesRoutes = require('./routes/clientes.routes');
+const swaggerDocument = require('./swagger');
 
 function crearApp({ catalogoService, pedidoService, clienteService }) {
   const app = express();
@@ -17,6 +19,8 @@ function crearApp({ catalogoService, pedidoService, clienteService }) {
   app.use('/api/catalogo', catalogoRoutes({ catalogoService }));
   app.use('/api/pedidos', pedidosRoutes({ pedidoService }));
   app.use('/api/clientes', clientesRoutes({ clienteService }));
+
+  app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
   app.use((req, res) => {
     res.status(404).json({ error: 'Ruta no encontrada' });

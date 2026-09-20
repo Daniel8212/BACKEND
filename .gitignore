@@ -27,3 +27,16 @@ desktop.ini
 
 # Docker
 *.pid
+
+# Backups y temporales
+*.bak
+*.tmp
+~$*
+
+# Scripts de diagnóstico temporales (no forman parte del proyecto)
+scripts/diagnostico/
+scripts/*.js
+
+# Config local de herramientas
+opencode.json
+opencode.jsonc

@@ -1,6 +1,7 @@
 'use strict';
 
 const ModeloCliente = require('../models/Cliente');
+const mongoose = require('mongoose');
 const Cliente = require('../../domain/entities/Cliente');
 const IRepositorioCliente = require('../../domain/interfaces/IRepositorioCliente');
 
@@ -19,6 +20,7 @@ class ClienteRepository extends IRepositorioCliente {
   }
 
   async buscarPorId(id) {
+    if (!mongoose.isValidObjectId(id)) return null;
     const doc = await ModeloCliente.findById(id).lean();
     return doc ? aEntidad(doc) : null;
   }

@@ -1,6 +1,7 @@
 'use strict';
 
 const ModeloProducto = require('../models/Producto');
+const mongoose = require('mongoose');
 const Producto = require('../../domain/entities/Producto');
 const IRepositorioProducto = require('../../domain/interfaces/IRepositorioProducto');
 
@@ -22,6 +23,7 @@ class ProductoRepository extends IRepositorioProducto {
   }
 
   async buscarPorId(id) {
+    if (!mongoose.isValidObjectId(id)) return null;
     const doc = await ModeloProducto.findById(id).lean();
     return doc ? aEntidad(doc) : null;
   }

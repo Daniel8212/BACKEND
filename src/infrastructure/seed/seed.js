@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const config = require('../config/env');
 const ModeloProducto = require('../models/Producto');
 const ModeloCliente = require('../models/Cliente');
+const ModeloPedido = require('../models/Pedido');
 
 const catalogo = [
   { nombre: 'Manzana ecológica', descripcion: 'Cosecha local certificada orgánica', precio: 2.5, linea: 'Frutas', stock: 'disponible' },
@@ -31,6 +32,9 @@ async function sembrar() {
   await ModeloCliente.deleteMany({});
   const clientesCreados = await ModeloCliente.insertMany(clientesDemo);
   console.log(`Seed: ${clientesCreados.length} clientes demo insertados`);
+
+  await ModeloPedido.deleteMany({});
+  console.log('Seed: pedidos de prueba eliminados');
 
   await mongoose.disconnect();
   console.log('Seed completado correctamente.');

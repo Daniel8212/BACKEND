@@ -43,7 +43,7 @@ class PedidoRepository extends IRepositorioPedido {
       cliente: clienteId,
       estado: 'Pendiente',
       createdAt: { $gte: desde },
-    }).lean();
+    }).sort({ createdAt: -1 }).lean();
     return doc ? aEntidad(doc) : null;
   }
 

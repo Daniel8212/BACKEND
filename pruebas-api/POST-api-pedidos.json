@@ -1,0 +1,86 @@
+{
+  "metodo": "POST",
+  "ruta": "/api/pedidos",
+  "descripcion": "Crea un pedido en estado Pendiente. Valida stock (R2) y doble pedido en menos de 5 minutos (R6).",
+  "nota": "Reemplazar <ObjectIdCliente> y <ObjectIdProducto> por ids reales de MongoDB.",
+  "casos": [
+    {
+      "nombre": "Pedido creado correctamente",
+      "peticion": {
+        "clienteId": "<ObjectIdCliente>",
+        "items": [
+          { "productoId": "<ObjectIdProducto>", "cantidad": 2 },
+          { "productoId": "<ObjectIdProducto>", "cantidad": 1 }
+        ]
+      },
+      "respuesta": {
+        "codigo": 201,
+        "cuerpo": {
+          "id": "<ObjectIdPedido>",
+          "clienteId": "<ObjectIdCliente>",
+          "items": [
+            { "productoId": "<ObjectIdProducto>", "cantidad": 2 },
+            { "productoId": "<ObjectIdProducto>", "cantidad": 1 }
+          ],
+          "estado": "Pendiente",
+          "fechaCreacion": "2026-09-20T15:30:00.000Z"
+        }
+      }
+    },
+    {
+      "nombre": "Faltan datos (sin items)",
+      "peticion": { "clienteId": "<ObjectIdCliente>", "items": [] },
+      "respuesta": {
+        "codigo": 400,
+        "cuerpo": {
+          "error": "El pedido debe incluir clienteId y al menos un ítem (productoId, cantidad).",
+          "errores": ["El pedido debe incluir clienteId y al menos un ítem (productoId, cantidad)."]
+        }
+      }
+    },
+    {
+      "nombre": "Cliente no existe",
+      "peticion": {
+        "clienteId": "<ObjectIdInexistente>",
+        "items": [{ "productoId": "<ObjectIdProducto>", "cantidad": 1 }]
+      },
+      "respuesta": {
+        "codigo": 404,
+        "cuerpo": {
+          "error": "El cliente \"<ObjectIdInexistente>\" no existe.",
+          "errores": ["El cliente \"<ObjectIdInexistente>\" no existe."]
+        }
+      }
+    },
+    {
+      "nombre": "Producto agotado (R2)",
+      "peticion": {
+        "clienteId": "<ObjectIdCliente>",
+        "items": [{ "productoId": "<ObjectIdCafe>", "cantidad": 1 }]
+      },
+      "respuesta": {
+        "codigo": 409,
+        "cuerpo": {
+          "error": "Regla 2: el producto \"Café de origen\" está agotado/sin stock y no puede incluirse en el pedido.",
+          "errores": ["Regla 2: el producto \"Café de origen\" está agotado/sin stock y no puede incluirse en el pedido."]
+        }
+      }
+    },
+    {
+      "nombre": "Doble pedido Pendiente en menos de 5 min (R6)",
+      "peticion": {
+        "clienteId": "<ObjectIdCliente>",
+        "items": [{ "productoId": "<ObjectIdProducto>", "cantidad": 2 }]
+      },
+      "respuesta": {
+        "codigo": 409,
+        "cuerpo": {
+          "error": "Regla 6: el cliente no puede crear dos pedidos Pendientes con los mismos productos y cantidades en menos de 5 minutos.",
+          "errores": [
+            "Regla 6: el cliente no puede crear dos pedidos Pendientes con los mismos productos y cantidades en menos de 5 minutos."
+          ]
+        }
+      }
+    }
+  ]
+}
