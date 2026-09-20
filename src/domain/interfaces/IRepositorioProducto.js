@@ -20,6 +20,10 @@ class IRepositorioProducto {
   async marcarAgotado(id) {
     throw new Error('IRepositorioProducto.marcarAgotado() no implementado');
   }
+
+  async eliminar(id) {
+    throw new Error('IRepositorioProducto.eliminar() no implementado');
+  }
 }
 
 module.exports = IRepositorioProducto;

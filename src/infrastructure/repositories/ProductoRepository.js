@@ -53,6 +53,12 @@ class ProductoRepository extends IRepositorioProducto {
     const doc = await ModeloProducto.findByIdAndUpdate(id, { stock: 'agotado' }, { new: true }).lean();
     return doc ? aEntidad(doc) : null;
   }
+
+  async eliminar(id) {
+    if (!mongoose.isValidObjectId(id)) return null;
+    const doc = await ModeloProducto.findByIdAndDelete(id).lean();
+    return doc ? aEntidad(doc) : null;
+  }
 }
 
 module.exports = ProductoRepository;

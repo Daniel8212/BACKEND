@@ -7,9 +7,9 @@ services:
       dockerfile: docker/Dockerfile
     container_name: greencart_api
     ports:
-      - "3000:3000"
+      - "4000:4000"
     environment:
-      - PORT=3000
+      - PORT=4000
       - MONGO_URI=mongodb://mongo:27017/greencart
     depends_on:
       - mongo

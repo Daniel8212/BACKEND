@@ -21,7 +21,7 @@ async function iniciar() {
 
   const catalogoService = new CatalogoService(repositorioProductos);
   const pedidoService = new PedidoService(repositorioPedidos, repositorioProductos, repositorioClientes);
-  const clienteService = new ClienteService(repositorioClientes);
+  const clienteService = new ClienteService(repositorioClientes, repositorioPedidos);
 
   const app = crearApp({ catalogoService, pedidoService, clienteService });
 

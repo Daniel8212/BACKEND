@@ -16,6 +16,10 @@ function crearApp({ catalogoService, pedidoService, clienteService }) {
     res.json({ estado: 'ok' });
   });
 
+  app.get('/', (req, res) => {
+    res.redirect('/api-docs');
+  });
+
   app.use('/api/catalogo', catalogoRoutes({ catalogoService }));
   app.use('/api/pedidos', pedidosRoutes({ pedidoService }));
   app.use('/api/clientes', clientesRoutes({ clienteService }));

@@ -66,6 +66,25 @@ class PedidoService {
     const pedidos = await this.repositorioPedidos.listarPorCliente(clienteId);
     return { exito: true, datos: pedidos };
   }
+
+  async buscarPorId(id) {
+    return this.repositorioPedidos.buscarPorId(id);
+  }
+
+  async actualizarEstado(id, estado) {
+    const pedido = await this.repositorioPedidos.buscarPorId(id);
+    if (!pedido) {
+      return { exito: false, codigo: 404, errores: [`El pedido "${id}" no existe.`] };
+    }
+
+    const validacion = PedidoValidator.validarTransicionEstado(pedido.estado, estado);
+    if (!validacion.esExitoso) {
+      return { exito: false, codigo: 409, errores: validacion.obtenerErrores() };
+    }
+
+    const actualizado = await this.repositorioPedidos.actualizarEstado(id, estado);
+    return { exito: true, datos: actualizado };
+  }
 }
 
 module.exports = PedidoService;
