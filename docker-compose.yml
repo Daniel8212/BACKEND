@@ -10,7 +10,7 @@ services:
       - "4000:4000"
     environment:
       - PORT=4000
-      - MONGO_URI=mongodb://mongo:27017/greencart
+      - MONGO_URI=${MONGO_URI}
     depends_on:
       - mongo
 
