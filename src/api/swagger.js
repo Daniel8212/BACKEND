@@ -9,7 +9,7 @@ const swaggerDocument = {
       'API REST de GreenCart (productos ecológicos). Arquitectura N-Capas: presentación, aplicación, dominio e infraestructura. Incluye las historias E1, E2 y E3 con las reglas de negocio R1–R6.',
   },
   servers: [
-    { url: 'http://localhost:4000', description: 'Servidor local (Docker / Node) ' },
+    { url: '/', description: 'Servidor actual (local o Render)' },
   ],
   tags: [
     { name: 'Sistema', description: 'Salud del servicio' },
